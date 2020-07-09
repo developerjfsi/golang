@@ -8,10 +8,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-/*ChequeoYaExisteUsuario realizara una busqueda en la base de datos para comprobar si el usuario existe*/
+/*ChequeoYaExisteUsuario recibe un email de parámetro y chequea si ya está en la BD */
 func ChequeoYaExisteUsuario(email string) (models.Usuario, bool, string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
+
 	db := MongoCN.Database("twittor")
 	col := db.Collection("usuarios")
 
@@ -24,6 +25,5 @@ func ChequeoYaExisteUsuario(email string) (models.Usuario, bool, string) {
 	if err != nil {
 		return resultado, false, ID
 	}
-
 	return resultado, true, ID
 }
